@@ -69,6 +69,8 @@ import vanilla_muffins_image from "./vanilla_muffins_image.png";
 import quinoa_image from "./quinoa_image.png";
 import brown_rice_image from "./brown_rice_image.png";
 import barley_image from "./barley_image.png";
+import walnut_image from "./walnut-1.jpg";
+
 
 export const assets = {
   logo,
@@ -218,6 +220,25 @@ export const dummyProducts = [
     updatedAt: "2025-03-25T07:18:13.103Z",
     inStock: true,
   },
+  {
+  _id: "fr91w12x",
+  name: "Walnut 250g",
+  category: "Fruits",
+  price: 370,
+  offerPrice: 350,
+  image: [walnut_image], 
+  description: [
+    "Premium quality dry fruit",
+    "Rich in omega-3 and antioxidants",
+    "Supports brain and heart health",
+    "Perfect for snacking or adding to desserts",
+    "Crunchy, fresh, and naturally sourced",
+  ],
+  createdAt: "2025-03-25T07:17:46.018Z",
+  updatedAt: "2025-03-25T07:18:13.103Z",
+  inStock: true,
+},
+
   {
     _id: "gd47g34h",
     name: "Tomato 1 kg",
