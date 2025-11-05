@@ -25,17 +25,17 @@ import main_banner_bg_sm from "./main_banner_bg_sm.png";
 import bottom_banner_image from "./bottom_banner_image.png";
 import bottom_banner_image_sm from "./bottom_banner_image_sm.png";
 import add_address_iamge from "./add_address_image.svg";
-import organic_vegitable_image from "./organic_vegitable_image.png";
+import Babycareproduct from "./Babycareproduct.png";
 import fresh_fruits_image from "./fresh_fruits_image.png";
 import bottles_image from "./bottles_image.png";
 import maggi_image from "./maggi_image.png";
 import dairy_product_image from "./dairy_product_image.png";
 import bakery_image from "./bakery_image.png";
 import grain_image from "./grain_image.png";
-import potato_image_1 from "./potato_image_1.png";
-import potato_image_2 from "./potato_image_2.png";
-import potato_image_3 from "./potato_image_3.png";
-import potato_image_4 from "./potato_image_4.png";
+import pampers from "./pampers.png";
+import pampersxl from "./pampersxl.png";
+import pampersxl1 from "./pampersxl1.png";
+import pampersm from "./pampersm.png";
 import tomato_image from "./tomato_image.png";
 import carrot_image from "./carrot_image.png";
 import apple_image from "./apple_image.png";
@@ -104,9 +104,9 @@ export const assets = {
 
 export const categories = [
   {
-    text: "Organic veggies",
-    path: "Vegetables",
-    image: organic_vegitable_image,
+    text: "Baby Products",
+    path: "Baby-Products",
+    image: Babycareproduct,
     bgColor: "#FEF6DA",
   },
   {
@@ -203,106 +203,66 @@ export const features = [
 ];
 
 export const dummyProducts = [
-  // Vegetables
-  {
-    _id: "gd46g23h",
-    name: "Potato 500g",
-    category: "Vegetables",
-    price: 25,
-    offerPrice: 20,
-    image: [potato_image_1, potato_image_2, potato_image_3, potato_image_4],
-    description: [
-      "Fresh and organic",
-      "Rich in carbohydrates",
-      "Ideal for curries and fries",
-    ],
-    createdAt: "2025-03-25T07:17:46.018Z",
-    updatedAt: "2025-03-25T07:18:13.103Z",
-    inStock: true,
+  // Baby Products
+    {
+    _id: "1",
+    name: "Pampers 13/-",
+    category: "Baby Product",
+    price: 13,
+    offerPrice: 13,
+    image: [pampers], 
+    description: "Soft and breathable Pampers Baby-Dry diapers for newborns and small babies. Provides up to 12 hours of dryness with leak protection.",
+    createdAt: "2025-11-05T09:00:00Z",
+    updatedAt: "2025-11-05T09:00:00Z",
+    inStock: true
   },
   {
-  _id: "fr91w12x",
-  name: "Walnut 250g",
-  category: "Fruits",
-  price: 370,
-  offerPrice: 350,
-  image: [walnut_image], 
-  description: [
-    "Premium quality dry fruit",
-    "Rich in omega-3 and antioxidants",
-    "Supports brain and heart health",
-    "Perfect for snacking or adding to desserts",
-    "Crunchy, fresh, and naturally sourced",
-  ],
-  createdAt: "2025-03-25T07:17:46.018Z",
-  updatedAt: "2025-03-25T07:18:13.103Z",
-  inStock: true,
-},
-
-  {
-    _id: "gd47g34h",
-    name: "Tomato 1 kg",
-    category: "Vegetables",
-    price: 40,
-    offerPrice: 35,
-    image: [tomato_image],
-    description: [
-      "Juicy and ripe",
-      "Rich in Vitamin C",
-      "Perfect for salads and sauces",
-      "Farm fresh quality",
-    ],
-    createdAt: "2025-03-25T07:17:46.018Z",
-    updatedAt: "2025-03-25T07:18:13.103Z",
-    inStock: true,
+    _id: "2",
+    name: "Pampers XL",
+    category: "Baby Product",
+    price: 38,
+    offerPrice: 38,
+    image: [pampersxl],
+    description: "Comfortable large-sized Pampers Baby-Dry diapers with 3-layer absorb technology to keep your baby dry all night long.",
+    createdAt: "2025-11-05T09:05:00Z",
+    updatedAt: "2025-11-05T09:05:00Z",
+    inStock: true
   },
   {
-    _id: "gd48g45h",
-    name: "Carrot 500g",
-    category: "Vegetables",
-    price: 30,
-    offerPrice: 28,
-    image: [carrot_image],
-    description: [
-      "Sweet and crunchy",
-      "Good for eyesight",
-      "Ideal for juices and salads",
-    ],
-    createdAt: "2025-03-25T07:17:46.018Z",
-    updatedAt: "2025-03-25T07:18:13.103Z",
-    inStock: true,
+    _id: "3",
+    name: "Pampers M 99/-",
+    category: "Baby Care",
+    price: 1049,
+    offerPrice: 849,
+    image: [pampersm],
+    description: "Easy-to-wear Pampers Baby-Dry Pants designed for active babies. Stretchable waistband and anti-rash layer ensure comfort all day.",
+    createdAt: "2025-11-05T09:10:00Z",
+    updatedAt: "2025-11-05T09:10:00Z",
+    inStock: true
   },
   {
-    _id: "gd49g56h",
-    name: "Spinach 500g",
-    category: "Vegetables",
-    price: 18,
-    offerPrice: 15,
-    image: [spinach_image_1],
-    description: [
-      "Rich in iron",
-      "High in vitamins",
-      "Perfect for soups and salads",
-    ],
-    createdAt: "2025-03-25T07:17:46.018Z",
-    updatedAt: "2025-03-25T07:18:13.103Z",
-    inStock: true,
+    _id: "4",
+    name: "Pampers M 25/-",
+    category: "Baby Care",
+    price: 1349,
+    offerPrice: 1099,
+    image: [pampersm],
+    description: "Pampers Premium Care diapers with silky soft material, lotion with aloe, and air channels for total comfort and care.",
+    createdAt: "2025-11-05T09:15:00Z",
+    updatedAt: "2025-11-05T09:15:00Z",
+    inStock: true
   },
   {
-    _id: "gd50g67h",
-    name: "Onion 500g",
-    category: "Vegetables",
-    price: 22,
-    offerPrice: 19,
-    image: [onion_image_1],
-    description: [
-      "Fresh and pungent",
-      "Perfect for cooking",
-      "A kitchen staple",
-    ],
-    createdAt: "2025-03-25T07:17:46.018Z",
-    updatedAt: "2025-03-25T07:18:13.103Z",
-    inStock: true,
+    _id: "5",
+    name: "Pampers Active Baby Pants (XXL - 36 Count)",
+    category: "Baby Care",
+    price: 1449,
+    offerPrice: 1199,
+    image: ["/assets/babyproduct.png"],
+    description: "Extra-large Pampers Active Baby Pants for toddlers. Offers superior fit, absorbent gel layer, and long-lasting dryness protection.",
+    createdAt: "2025-11-05T09:20:00Z",
+    updatedAt: "2025-11-05T09:20:00Z",
+    inStock: true
   },
 
   // Fruits
