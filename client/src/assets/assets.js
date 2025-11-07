@@ -26,7 +26,7 @@ import bottom_banner_image from "./bottom_banner_image.png";
 import bottom_banner_image_sm from "./bottom_banner_image_sm.png";
 import add_address_iamge from "./add_address_image.svg";
 import Babycareproduct from "./Babycareproduct.png";
-import fresh_fruits_image from "./fresh_fruits_image.png";
+import dryfriuts from "./dryfriuts.png";
 import bottles_image from "./bottles_image.png";
 import maggi_image from "./maggi_image.png";
 import dairy_product_image from "./dairy_product_image.png";
@@ -70,6 +70,7 @@ import quinoa_image from "./quinoa_image.png";
 import brown_rice_image from "./brown_rice_image.png";
 import barley_image from "./barley_image.png";
 import walnut_image from "./walnut-1.jpg";
+import invoice_icon from "./invoice_icon.png";
 
 
 export const assets = {
@@ -100,6 +101,7 @@ export const assets = {
   bottom_banner_image_sm,
   add_address_iamge,
   box_icon,
+  invoice_icon
 };
 
 export const categories = [
@@ -110,14 +112,14 @@ export const categories = [
     bgColor: "#FEF6DA",
   },
   {
-    text: "Fresh Fruits",
-    path: "Fruits",
-    image: fresh_fruits_image,
+    text: "Dry Fruits",
+    path: "Dry-Fruits",
+    image: dryfriuts,
     bgColor: "#FEE0E0",
   },
   {
-    text: "Cold Drinks",
-    path: "Drinks",
+    text: "Daily Use",
+    path: "Daily",
     image: bottles_image,
     bgColor: "#F0F5DE",
   },
@@ -231,9 +233,9 @@ export const dummyProducts = [
   {
     _id: "3",
     name: "Pampers M 99/-",
-    category: "Baby Care",
-    price: 1049,
-    offerPrice: 849,
+    category: "Baby Product",
+    price: 99,
+    offerPrice: 98.01,
     image: [pampersm],
     description: "Easy-to-wear Pampers Baby-Dry Pants designed for active babies. Stretchable waistband and anti-rash layer ensure comfort all day.",
     createdAt: "2025-11-05T09:10:00Z",
@@ -243,9 +245,9 @@ export const dummyProducts = [
   {
     _id: "4",
     name: "Pampers M 25/-",
-    category: "Baby Care",
-    price: 1349,
-    offerPrice: 1099,
+    category: "Baby Product",
+    price: 25,
+    offerPrice: 25,
     image: [pampersm],
     description: "Pampers Premium Care diapers with silky soft material, lotion with aloe, and air channels for total comfort and care.",
     createdAt: "2025-11-05T09:15:00Z",
@@ -254,12 +256,12 @@ export const dummyProducts = [
   },
   {
     _id: "5",
-    name: "Pampers Active Baby Pants (XXL - 36 Count)",
-    category: "Baby Care",
+    name: "Pampers L",
+    category: "Baby Product",
     price: 1449,
     offerPrice: 1199,
     image: ["/assets/babyproduct.png"],
-    description: "Extra-large Pampers Active Baby Pants for toddlers. Offers superior fit, absorbent gel layer, and long-lasting dryness protection.",
+    description: "Large Pampers Active Baby Pants for toddlers. Offers superior fit, absorbent gel layer, and long-lasting dryness protection.",
     createdAt: "2025-11-05T09:20:00Z",
     updatedAt: "2025-11-05T09:20:00Z",
     inStock: true

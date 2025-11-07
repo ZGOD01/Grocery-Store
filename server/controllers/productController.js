@@ -78,3 +78,42 @@ export const deleteProduct = async (req, res) => {
 };
 
 
+// Update Product : /api/product/update/:id
+export const updateProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+    let productData = req.body.productData ? JSON.parse(req.body.productData) : req.body;
+
+    const images = req.files;
+
+    let imagesUrl = [];
+
+    if (images && images.length > 0) {
+      imagesUrl = await Promise.all(
+        images.map(async (item) => {
+          let result = await cloudinary.uploader.upload(item.path, { resource_type: 'image' });
+          return result.secure_url;
+        })
+      );
+    }
+
+    // If new images uploaded, replace; otherwise keep old ones
+    if (imagesUrl.length > 0) {
+      productData.image = imagesUrl;
+    }
+
+    const updatedProduct = await Product.findByIdAndUpdate(id, productData, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!updatedProduct) {
+      return res.json({ success: false, message: "Product not found" });
+    }
+
+    res.json({ success: true, message: "Product updated successfully", product: updatedProduct });
+  } catch (error) {
+    console.log("Update error:", error.message);
+    res.json({ success: false, message: error.message });
+  }
+};
