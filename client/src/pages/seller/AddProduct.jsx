@@ -20,36 +20,55 @@ const AddProduct = () => {
   const { axios } = useAppContext();
   const videoRef = useRef(null);
   const codeReader = useRef(new BrowserMultiFormatReader());
+  const [stream, setStream] = useState(null);
 
-  // Barcode scanning effect
+  // ✅ Start Barcode Scanning Effect
   useEffect(() => {
-    if (isScanning) {
-      codeReader.current
-        .listVideoInputDevices()
-        .then((devices) => {
-          if (devices.length > 0) {
-            codeReader.current.decodeFromVideoDevice(
-              devices[0].deviceId,
-              videoRef.current,
-              (result, err) => {
-                if (result) {
-                  setBarcode(result.getText());
-                  setIsScanning(false);
-                  codeReader.current.reset();
-                  toast.success(`Barcode detected: ${result.getText()}`);
-                  handleBarcodeLookup(result.getText());
-                }
+    if (isScanning && videoRef.current) {
+      navigator.mediaDevices
+        .getUserMedia({ video: { facingMode: "environment" } })
+        .then((mediaStream) => {
+          setStream(mediaStream);
+          videoRef.current.srcObject = mediaStream;
+          videoRef.current.play();
+
+          codeReader.current.decodeFromVideoDevice(
+            null,
+            videoRef.current,
+            (result, err) => {
+              if (result) {
+                const code = result.getText();
+                setBarcode(code);
+                toast.success(`Detected Barcode: ${code}`);
+                handleBarcodeLookup(code);
+
+                setIsScanning(false);
+                stopCamera();
               }
-            );
-          } else toast.error("No camera found!");
+            }
+          );
         })
-        .catch(() => toast.error("Camera access failed"));
+        .catch((err) => {
+          toast.error("Camera access denied or unavailable");
+          setIsScanning(false);
+        });
     }
 
-    return () => codeReader.current.reset();
+    return () => {
+      stopCamera();
+    };
+    // eslint-disable-next-line
   }, [isScanning]);
 
-  // Fetch product info using barcode
+  // ✅ Stop Camera Helper
+  const stopCamera = () => {
+    codeReader.current.reset();
+    if (stream) {
+      stream.getTracks().forEach((track) => track.stop());
+    }
+  };
+
+  // ✅ Fetch Product Info using Barcode
   const handleBarcodeLookup = async (code) => {
     try {
       toast.loading("Fetching product info...");
@@ -63,7 +82,7 @@ const AddProduct = () => {
         const product = data.product;
         setName(product.product_name || "");
         setDescription(product.generic_name || "");
-        setCategory(product.categories_tags?.[0] || "");
+        setCategory(product.categories_tags?.[0]?.replace("en:", "") || "");
         setPrice("");
         setOfferPrice("");
         setQuantity(1);
@@ -77,6 +96,7 @@ const AddProduct = () => {
     }
   };
 
+  // ✅ Handle Add Product Submit
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     try {
@@ -113,7 +133,6 @@ const AddProduct = () => {
 
   return (
     <div className="no-scrollbar flex-1 h-[95vh] overflow-y-scroll flex flex-col justify-between">
-      {/* Container: Form on left + Barcode Scanner on right */}
       <div className="flex flex-col md:flex-row md:space-x-10 p-6">
         {/* ---------- LEFT SIDE: Manual Form ---------- */}
         <form
@@ -283,10 +302,16 @@ const AddProduct = () => {
 
           {isScanning && (
             <>
-              <video ref={videoRef} className="w-full max-w-xs rounded-lg" />
+              <video
+                ref={videoRef}
+                autoPlay
+                muted
+                playsInline
+                className="w-full max-w-xs rounded-lg"
+              />
               <button
                 onClick={() => {
-                  codeReader.current.reset();
+                  stopCamera();
                   setIsScanning(false);
                 }}
                 className="mt-3 px-4 py-1 bg-red-500 text-white rounded"
