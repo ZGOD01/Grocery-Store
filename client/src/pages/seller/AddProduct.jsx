@@ -22,13 +22,27 @@ const AddProduct = () => {
   const codeReader = useRef(new BrowserMultiFormatReader());
   const [stream, setStream] = useState(null);
 
+  // ✅ Stop Camera Helper (CRITICAL FIXES HERE)
+  const stopCamera = () => {
+    // 1. Stop the ZXing decoding process
+    codeReader.current.reset();
+    
+    // 2. Stop all active media tracks (releases the camera)
+    if (stream) {
+      stream.getTracks().forEach((track) => track.stop());
+      setStream(null); // IMPORTANT: Clear the stream state so the cleanup doesn't try to stop it again
+    }
+    // 3. Ensure scanning state is false (done on button click, but good practice here too)
+    // setIsScanning(false); // This is handled by the component's state changes, but keeping it in the handlers is safe.
+  };
+
   // ✅ Start Barcode Scanning Effect
   useEffect(() => {
     if (isScanning && videoRef.current) {
       navigator.mediaDevices
         .getUserMedia({ video: { facingMode: "environment" } })
         .then((mediaStream) => {
-          setStream(mediaStream);
+          setStream(mediaStream); // Set the stream state
           videoRef.current.srcObject = mediaStream;
           videoRef.current.play();
 
@@ -42,31 +56,29 @@ const AddProduct = () => {
                 toast.success(`Detected Barcode: ${code}`);
                 handleBarcodeLookup(code);
 
+                // Stop scanning and camera immediately after successful scan
                 setIsScanning(false);
-                stopCamera();
+                // Call stopCamera immediately after a successful scan
+                // Since stopCamera uses the current `stream` state, we ensure it's up to date.
+                codeReader.current.reset(); 
+                if (mediaStream) mediaStream.getTracks().forEach((track) => track.stop());
+                setStream(null); 
               }
             }
           );
         })
         .catch((err) => {
-          toast.error("Camera access denied or unavailable");
+          toast.error("Camera access denied or unavailable: " + err.message);
           setIsScanning(false);
         });
     }
 
+    // CLEANUP FUNCTION: Ensures camera is always released when the component unmounts or isScanning changes.
     return () => {
       stopCamera();
     };
     // eslint-disable-next-line
-  }, [isScanning]);
-
-  // ✅ Stop Camera Helper
-  const stopCamera = () => {
-    codeReader.current.reset();
-    if (stream) {
-      stream.getTracks().forEach((track) => track.stop());
-    }
-  };
+  }, [isScanning]); // Depend on isScanning
 
   // ✅ Fetch Product Info using Barcode
   const handleBarcodeLookup = async (code) => {
@@ -301,35 +313,54 @@ const AddProduct = () => {
           )}
 
           {isScanning && (
-            <div className="relative w-full max-w-xs">
-              {/* Camera Feed */}
+            <div className="relative w-full max-w-xs aspect-square flex items-center justify-center overflow-hidden rounded-lg border border-gray-400 shadow-lg bg-black">
+              {/* Video Feed */}
               <video
                 ref={videoRef}
                 autoPlay
                 muted
                 playsInline
-                className="w-full h-auto rounded-lg object-cover"
+                className="absolute inset-0 w-full h-full object-cover rounded-lg"
               />
 
-              {/* Dark Overlay with Center Box */}
-              <div className="absolute inset-0 bg-black/60 rounded-lg">
-                <div className="absolute top-1/2 left-1/2 w-48 h-48 border-4 border-green-500 rounded-md transform -translate-x-1/2 -translate-y-1/2 bg-transparent shadow-[0_0_20px_2px_rgba(0,255,0,0.3)] animate-pulse"></div>
-              </div>
+              {/* Scanning Box (Green frame) */}
+              <div className="absolute w-40 h-40 border-4 border-green-500 rounded-md" />
+
+              {/* Scanning Line */}
+              <div
+                className="absolute w-32 h-0.5 bg-red-500 animate-[scan_1.5s_ease-in-out_infinite_alternate]
+      left-1/2 -translate-x-1/2"
+                style={{
+                  top: "calc(50% - 80px)",
+                  animationName: "scan",
+                  animationTimingFunction: "ease-in-out",
+                  animationDuration: "1.5s",
+                  animationIterationCount: "infinite",
+                  animationDirection: "alternate",
+                }}
+              ></div>
 
               {/* Stop Button */}
               <button
                 onClick={() => {
-                  stopCamera();
-                  setIsScanning(false);
+                  setIsScanning(false); // Stop scanning state first
+                  stopCamera(); // Then manually call the centralized stop function
                 }}
-                className="absolute bottom-3 left-1/2 transform -translate-x-1/2 px-4 py-1 bg-red-600 text-white rounded-md shadow-md"
+                className="absolute bottom-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-red-600 text-white rounded-md shadow-md hover:bg-red-700"
                 type="button"
               >
                 Stop
               </button>
+
+              {/* Inline Keyframes */}
+              <style>{`
+      @keyframes scan {
+        0% { transform: translate(-50%, -100%); }
+        100% { transform: translate(-50%, 100%); }
+      }
+    `}</style>
             </div>
           )}
-
 
           {showConfirm && (
             <div className="mt-4 bg-gray-100 border rounded-lg p-3 text-center">
