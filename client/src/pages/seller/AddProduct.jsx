@@ -301,26 +301,35 @@ const AddProduct = () => {
           )}
 
           {isScanning && (
-            <>
+            <div className="relative w-full max-w-xs">
+              {/* Camera Feed */}
               <video
                 ref={videoRef}
                 autoPlay
                 muted
                 playsInline
-                className="w-full max-w-xs rounded-lg"
+                className="w-full h-auto rounded-lg object-cover"
               />
+
+              {/* Dark Overlay with Center Box */}
+              <div className="absolute inset-0 bg-black/60 rounded-lg">
+                <div className="absolute top-1/2 left-1/2 w-48 h-48 border-4 border-green-500 rounded-md transform -translate-x-1/2 -translate-y-1/2 bg-transparent shadow-[0_0_20px_2px_rgba(0,255,0,0.3)] animate-pulse"></div>
+              </div>
+
+              {/* Stop Button */}
               <button
                 onClick={() => {
                   stopCamera();
                   setIsScanning(false);
                 }}
-                className="mt-3 px-4 py-1 bg-red-500 text-white rounded"
+                className="absolute bottom-3 left-1/2 transform -translate-x-1/2 px-4 py-1 bg-red-600 text-white rounded-md shadow-md"
                 type="button"
               >
                 Stop
               </button>
-            </>
+            </div>
           )}
+
 
           {showConfirm && (
             <div className="mt-4 bg-gray-100 border rounded-lg p-3 text-center">
